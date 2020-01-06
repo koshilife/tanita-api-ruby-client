@@ -21,8 +21,10 @@ module Tanita
         DATE_REGISTERD_AT = 0
         DATE_MEASURED_AT = 1
 
-        def initialize(access_token:)
-          @access_token = access_token
+        def initialize(access_token: nil)
+          config = Tanita::Api::Client.configuration
+          @access_token = access_token || config.access_token
+          raise Error.new("param:'access_token' is required.'") if @access_token.nil?
         end
 
         def endpoint

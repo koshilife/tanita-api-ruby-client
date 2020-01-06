@@ -2,19 +2,32 @@
 
 require 'tanita/api/client/base'
 require 'tanita/api/client/helpers'
+require 'tanita/api/client/configuration'
 require 'tanita/api/client/version'
 
 module Tanita
   module Api
     module Client
+      class << self
+        def configure
+          yield configuration
+        end
+
+        def configuration
+          @configuration ||= Tanita::Api::Client::Configuration.new
+        end
+      end
+
       class Auth
         include HttpHelper
 
-        def initialize(client_id:, client_secret:, redirect_uri:, scopes: [Scope::INNERSCAN])
-          @client_id = client_id
-          @client_secret = client_secret
-          @redirect_uri = redirect_uri
-          @scopes = scopes
+        def initialize(client_id: nil, client_secret: nil, redirect_uri: nil, scopes: nil)
+          config = Tanita::Api::Client.configuration
+          @client_id = client_id || config.client_id
+          @client_secret = client_secret || config.client_secret
+          @redirect_uri = redirect_uri || config.redirect_uri
+          @scopes = scopes || config.scopes
+          check_required_arguments
         end
 
         def auth_uri
@@ -41,6 +54,15 @@ module Tanita
           raise Error.new("#{self.class}.#{__method__}: #{token[:error]}") if token.key? :error
 
           token
+        end
+
+      private
+
+        def check_required_arguments
+          raise Error.new("param:'client_id' is required.'") if @client_id.nil?
+          raise Error.new("param:'client_secret' is required.'") if @client_secret.nil?
+          raise Error.new("param:'redirect_uri' is required.'") if @redirect_uri.nil?
+          raise Error.new("param:'scopes' is required.'") if @scopes.nil?
         end
       end
 
