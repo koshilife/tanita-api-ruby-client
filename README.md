@@ -60,7 +60,7 @@ auth_helper = Tanita::Api::Client::Auth.new(
 Below is the sample get an authentication url and exchange access token from an authentication code.
 
 ```ruby
-# get Tanita authentication url
+# get Health Planet authentication url
 auth_helper.auth_uri
 => "https://www.healthplanet.jp/oauth/auth?client_id=YOUR_ID&redirect_uri=http%3A%2F%2F127.0.0.1%2Fcallback&scope=innerscan&response_type=code"
 
@@ -105,7 +105,7 @@ result.data.each{|item| puts "#{item[:date]} #{item[:weight]}" }
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/koshilife/tanita-api-ruby-client. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on [GitHub](https://github.com/koshilife/tanita-api-ruby-client). This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
