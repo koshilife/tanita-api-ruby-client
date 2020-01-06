@@ -18,7 +18,7 @@ module Tanita
 
         # [Array<Tanita::Api::Client::Scope>]
         attr_accessor :scopes
-    end
+      end
     end
   end
 end

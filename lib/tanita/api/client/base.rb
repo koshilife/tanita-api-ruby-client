@@ -10,6 +10,9 @@ module Tanita
         SPHYGMOMANOMETER = 'sphygmomanometer'
         PEDOMETER = 'pedometer'
         SMUG = 'smug'
+        def self.all
+          constants.map { |name| const_get(name) }
+        end
       end
 
       class Error < StandardError
@@ -27,14 +30,6 @@ module Tanita
           raise Error.new("param:'access_token' is required.'") if @access_token.nil?
         end
 
-        def endpoint
-          raise NotImplementedError
-        end
-
-        def measurement_tags
-          raise NotImplementedError
-        end
-
         def status(
           date_type: DATE_MEASURED_AT,
           from: nil,
@@ -48,9 +43,16 @@ module Tanita
           }
           params[:from] = time_format(from) unless from.nil?
           params[:to] = time_format(to) unless to.nil?
-
           res = request(endpoint, params)
           Result.new(:response => res, :client => self)
+        end
+
+        def endpoint
+          raise NotImplementedError
+        end
+
+        def measurement_tags
+          raise NotImplementedError
         end
 
       private
@@ -94,7 +96,7 @@ module Tanita
             data_dic[key][measurement] = value
           end
           # sort by date in ascending order
-          @data = data_dic.values { |dic| -dic[:date] }
+          @data = data_dic.values.sort_by { |dic| dic[:date] }
         end
       end
     end
