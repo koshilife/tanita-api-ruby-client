@@ -73,15 +73,14 @@ module Tanita
 
         def measurement_tags
           {
-            :weight => '6021',
-            :body_fat => '6022',
-            :muscle_mass => '6023',
-            :physique_rating => '6024',
-            :visceral_fat_rating2 => '6025',
-            :visceral_fat_rating1 => '6026',
-            :basal_metabolic_rate => '6027',
-            :metabolic_age => '6028',
-            :bone_mass => '6029'
+            :weight => {:code => '6021', :type => Float},
+            :body_fat => {:code => '6022', :type => Float},
+            :muscle_mass => {:code => '6023', :type => Float},
+            :physique_rating => {:code => '6024', :type => Integer},
+            :visceral_fat_rating => {:code => '6025', :type => Float},
+            :basal_metabolic_rate => {:code => '6027', :type => Integer},
+            :metabolic_age =>  {:code => '6028', :type => Integer},
+            :bone_mass =>  {:code => '6029', :type => Float}
           }
         end
       end
@@ -93,9 +92,9 @@ module Tanita
 
         def measurement_tags
           {
-            :maximal_pressure => '622E',
-            :minimal_pressure => '622F',
-            :pulse => '6230'
+            :maximal_pressure => {:code =>  '622E', :type =>  Integer},
+            :minimal_pressure => {:code =>  '622F', :type =>  Integer},
+            :pulse => {:code =>  '6230', :type =>  Integer}
           }
         end
       end
@@ -107,9 +106,9 @@ module Tanita
 
         def measurement_tags
           {
-            :steps => '6331',
-            :exercise => '6335',
-            :calories => '6336'
+            :steps => {:code =>  '6331', :type =>  Integer},
+            :exercise => {:code => '6335', :type => Integer},
+            :calories => {:code => '6336', :type => Integer}
           }
         end
       end
@@ -121,7 +120,7 @@ module Tanita
 
         def measurement_tags
           {
-            :urinary_sugar => '6240'
+            :urinary_sugar => {:code => '6240', :type => Integer}
           }
         end
       end

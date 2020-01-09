@@ -91,16 +91,37 @@ result = api.status
 result = api.status(from: Date.current.ago(1.month), to: Date.current)
 
 # list the body-weight data
-result.data.each{|item| puts "#{item[:date]} #{item[:weight]}" }
->> result.data.each{|item| puts "#{item[:date]} #{item[:weight]}" }
-201910070753 66.70
-201910070917 66.00
-201910080739 66.40
-201910090806 66.20
-201910090852 65.50
-201910100809 66.70
-201910110902 66.50
-201910130822 66.70
+result.items.each{|item| puts "#{Time.at(item[:measured_at]).strftime('%F %R')} => #{item[:weight]}" }
+2019-10-10 08:09 => 66.7
+2019-10-11 09:02 => 66.5
+2019-10-13 08:22 => 66.7
+2019-10-15 08:49 => 66.4
+2019-10-17 07:52 => 67.0
+
+# Result of Innerscan Api
+result = Tanita::Api::Client::Innerscan.new.status
+result.items[0].keys
+=> [:measured_at, :model, :weight, :body_fat, :muscle_mass, :physique_rating, :visceral_fat_rating, :basal_metabolic_rate, :metabolic_age, :bone_mass]
+
+# Result of Sphygmomanometer Api
+result = Tanita::Api::Client::Sphygmomanometer.new.status
+result.items[0].keys
+=> [:measured_at, :model, :maximal_pressure, :minimal_pressure, :pulse]
+
+# Result of Pedometer Api
+result = Tanita::Api::Client::Pedometer.new.status
+result.items[0].keys
+=> [:measured_at, :model, :steps, :calories]
+
+# Result of Smug Api
+result = Tanita::Api::Client::Smug.new.status
+result.items[0].keys
+=> [:measured_at, :model, :urinary_sugar]
+
+# common attributes of Result class
+result.birth_date # [Date]
+result.height     # [Float] (centimeter)
+result.sex        # [String] 'male' or 'female'
 ```
 
 ## Contributing
