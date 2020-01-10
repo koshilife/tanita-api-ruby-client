@@ -6,10 +6,10 @@ require 'net/https'
 module Tanita
   module Api
     module Client
-      module HttpHelper
-        BASE_URL = 'https://www.healthplanet.jp'
-        DEFAULT_REDIRECT_URI = "#{BASE_URL}/success.html"
+      BASE_URL = 'https://www.healthplanet.jp'
+      DEFAULT_REDIRECT_URI = "#{BASE_URL}/success.html"
 
+      module HttpHelper
         def generate_uri(path, params)
           uri = URI.parse("#{BASE_URL}#{path}?#{URI.encode_www_form(params)}")
           uri.to_s

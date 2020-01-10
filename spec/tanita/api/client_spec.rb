@@ -3,7 +3,6 @@
 require 'spec_helper'
 
 Client = Tanita::Api::Client
-TANITA_HOST = Client::HttpHelper::BASE_URL
 
 RSpec.describe Tanita::Api::Client do
   before(:context) do
@@ -42,14 +41,14 @@ RSpec.describe Tanita::Api::Client do
     it 'raise Error when exchange access token by invalid auth code' do
       auth_helper = Client::Auth.new
       body = read_fixture('exchange_token', 'invalid.json')
-      WebMock.stub_request(:post, "#{TANITA_HOST}/oauth/token").to_return(:body => body)
+      WebMock.stub_request(:post, "#{Client::BASE_URL}/oauth/token").to_return(:body => body)
       expect { auth_helper.exchange_token(:auth_code => 'invalid_code') }.to raise_error(Client::Error)
     end
 
     it 'exchange access token by valid auth code' do
       auth_helper = Client::Auth.new
       body = read_fixture('exchange_token', 'valid.json')
-      WebMock.stub_request(:post, "#{TANITA_HOST}/oauth/token").to_return(:body => body)
+      WebMock.stub_request(:post, "#{Client::BASE_URL}/oauth/token").to_return(:body => body)
       expected_token = {:access_token => 'hoge_access_token', :expires_in => 12_345_678, :refresh_token => 'hoge_refresh_token'}
       expect(auth_helper.exchange_token(:auth_code => 'valid_code')).to eq expected_token
     end
@@ -79,14 +78,14 @@ RSpec.describe Tanita::Api::Client do
     it 'raise Error invalid token' do
       innerscan = Client::Innerscan.new
       body = read_fixture('services', 'invalid_token.html')
-      WebMock.stub_request(:post, "#{TANITA_HOST}/status/innerscan.json").to_return(:body => body)
+      WebMock.stub_request(:post, "#{Client::BASE_URL}/status/innerscan.json").to_return(:body => body)
       expect { innerscan.status }.to raise_error(Client::Error)
     end
 
     it 'fetch Innerscan data' do
       api = Client::Innerscan.new
       body = read_fixture('services', 'innerscan_valid.json')
-      WebMock.stub_request(:post, "#{TANITA_HOST}#{api.endpoint}").to_return(:body => body)
+      WebMock.stub_request(:post, "#{Client::BASE_URL}#{api.endpoint}").to_return(:body => body)
       result = api.status
 
       expect(result.birth_date).to eq Date.parse('20200101')
@@ -124,7 +123,7 @@ RSpec.describe Tanita::Api::Client do
     it 'fetch Sphygmomanometer data' do
       api = Client::Sphygmomanometer.new(:date_type => Client::DATE_TYPE_REGISTERD_AT)
       body = read_fixture('services', 'sphygmomanometer_valid.json')
-      WebMock.stub_request(:post, "#{TANITA_HOST}#{api.endpoint}").to_return(:body => body)
+      WebMock.stub_request(:post, "#{Client::BASE_URL}#{api.endpoint}").to_return(:body => body)
       result = api.status
 
       expect(result.birth_date).to eq Date.parse('20200101')
@@ -152,7 +151,7 @@ RSpec.describe Tanita::Api::Client do
     it 'fetch Pedometer items' do
       api = Client::Pedometer.new
       body = read_fixture('services', 'pedometer_valid.json')
-      WebMock.stub_request(:post, "#{TANITA_HOST}#{api.endpoint}").to_return(:body => body)
+      WebMock.stub_request(:post, "#{Client::BASE_URL}#{api.endpoint}").to_return(:body => body)
       result = api.status
 
       expect(result.birth_date).to eq Date.parse('20200101')
@@ -178,7 +177,7 @@ RSpec.describe Tanita::Api::Client do
     it 'fetch Smug data' do
       api = Client::Smug.new
       body = read_fixture('services', 'smug_valid.json')
-      WebMock.stub_request(:post, "#{TANITA_HOST}#{api.endpoint}").to_return(:body => body)
+      WebMock.stub_request(:post, "#{Client::BASE_URL}#{api.endpoint}").to_return(:body => body)
       result = api.status
 
       expect(result.birth_date).to eq Date.parse('20200101')

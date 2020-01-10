@@ -1,4 +1,9 @@
 
+# 0.2.1
+
+* rename constant 
+  * from `Tanita::Api::Client::HttpHelper::BASE_URL` to `Tanita::Api::Client::BASE_URL`
+
 # 0.2.0
 
 * set required ruby version to greater than or equal to v2.4
@@ -17,3 +22,4 @@
 # 0.1.0
 
 * Initial release
+
