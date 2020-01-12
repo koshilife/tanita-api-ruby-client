@@ -34,21 +34,21 @@ RSpec.describe Tanita::Api::Client do
 
     it 'generate valid auth uri' do
       auth_helper = Client::Auth.new
-      expected_uri = 'https://www.healthplanet.jp/oauth/auth?client_id=hoge_client_id&redirect_uri=hoge_redirect_uri&scope=innerscan&response_type=code'
+      expected_uri = "#{Client::AUTH_URL}?client_id=hoge_client_id&redirect_uri=hoge_redirect_uri&scope=innerscan&response_type=code"
       expect(auth_helper.auth_uri).to eq expected_uri
     end
 
     it 'raise Error when exchange access token by invalid auth code' do
       auth_helper = Client::Auth.new
       body = read_fixture('exchange_token', 'invalid.json')
-      WebMock.stub_request(:post, "#{Client::BASE_URL}/oauth/token").to_return(:body => body)
+      WebMock.stub_request(:post, "#{Client::TOKEN_URL}").to_return(:body => body)
       expect { auth_helper.exchange_token(:auth_code => 'invalid_code') }.to raise_error(Client::Error)
     end
 
     it 'exchange access token by valid auth code' do
       auth_helper = Client::Auth.new
       body = read_fixture('exchange_token', 'valid.json')
-      WebMock.stub_request(:post, "#{Client::BASE_URL}/oauth/token").to_return(:body => body)
+      WebMock.stub_request(:post, "#{Client::TOKEN_URL}").to_return(:body => body)
       expected_token = {:access_token => 'hoge_access_token', :expires_in => 12_345_678, :refresh_token => 'hoge_refresh_token'}
       expect(auth_helper.exchange_token(:auth_code => 'valid_code')).to eq expected_token
     end

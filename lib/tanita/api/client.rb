@@ -37,7 +37,7 @@ module Tanita
             :scope => @scopes.join(','),
             :response_type => 'code'
           }
-          generate_uri('/oauth/auth', params)
+          generate_uri(AUTH_URL_PATH, params)
         end
 
         def exchange_token(auth_code:)
@@ -48,7 +48,7 @@ module Tanita
             :code => auth_code,
             :grant_type => 'authorization_code'
           }
-          res = request('/oauth/token', params)
+          res = request(TOKEN_URL_PATH, params)
           token = parse_json(res.body)
 
           raise Error.new("#{self.class}.#{__method__}: #{token[:error]}") if token.key? :error

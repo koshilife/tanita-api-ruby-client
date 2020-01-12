@@ -1,7 +1,15 @@
+# 0.2.2
+
+* define constants
+  * `Tanita::Api::Client::AUTH_URL`
+  * `Tanita::Api::Client::AUTH_URL_PATH`
+  * `Tanita::Api::Client::TOKEN_URL`
+  * `Tanita::Api::Client::TOKEN_URL_PATH`
+
 
 # 0.2.1
 
-* rename constant 
+* rename constant
   * from `Tanita::Api::Client::HttpHelper::BASE_URL` to `Tanita::Api::Client::BASE_URL`
 
 # 0.2.0

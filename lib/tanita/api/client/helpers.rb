@@ -7,6 +7,13 @@ module Tanita
   module Api
     module Client
       BASE_URL = 'https://www.healthplanet.jp'
+
+      AUTH_URL_PATH = '/oauth/auth'
+      AUTH_URL = "#{BASE_URL}#{AUTH_URL_PATH}"
+
+      TOKEN_URL_PATH =  '/oauth/token'
+      TOKEN_URL = "#{BASE_URL}#{TOKEN_URL_PATH}"
+
       DEFAULT_REDIRECT_URI = "#{BASE_URL}/success.html"
 
       module HttpHelper
