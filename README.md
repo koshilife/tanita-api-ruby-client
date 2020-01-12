@@ -1,5 +1,6 @@
 # Tanita::Api::Client
 
+[![Gem Version](https://badge.fury.io/rb/tanita-api-client.svg)](http://badge.fury.io/rb/tanita-api-client)
 
 ## About
 
