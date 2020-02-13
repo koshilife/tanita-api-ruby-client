@@ -11,7 +11,7 @@ module Tanita
       AUTH_URL_PATH = '/oauth/auth'
       AUTH_URL = "#{BASE_URL}#{AUTH_URL_PATH}"
 
-      TOKEN_URL_PATH =  '/oauth/token'
+      TOKEN_URL_PATH = '/oauth/token'
       TOKEN_URL = "#{BASE_URL}#{TOKEN_URL_PATH}"
 
       DEFAULT_REDIRECT_URI = "#{BASE_URL}/success.html"
@@ -36,6 +36,10 @@ module Tanita
           JSON.parse(str, :symbolize_names => true)
         rescue JSON::ParserError => e
           raise Error.new("JSON::ParseError: '#{e}'\nstr:#{str}")
+        end
+
+        def time_format(time)
+          time.strftime('%Y%m%d%H%M%S')
         end
       end
     end

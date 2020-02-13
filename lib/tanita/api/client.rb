@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
-require 'tanita/api/client/base'
-require 'tanita/api/client/helpers'
-require 'tanita/api/client/configuration'
-require 'tanita/api/client/version'
+Dir[
+  File.join(
+    File.dirname(__FILE__),
+    'client',
+    '*'
+  )
+].sort.each { |f| require f }
 
 module Tanita
   module Api
@@ -67,11 +70,11 @@ module Tanita
       end
 
       class Innerscan < BaseApiClient
-        def endpoint
+        def self.endpoint
           '/status/innerscan.json'
         end
 
-        def measurement_tags
+        def self.properties
           {
             :weight => {:code => '6021', :type => Float},
             :body_fat => {:code => '6022', :type => Float},
@@ -86,11 +89,11 @@ module Tanita
       end
 
       class Sphygmomanometer < BaseApiClient
-        def endpoint
+        def self.endpoint
           '/status/sphygmomanometer.json'
         end
 
-        def measurement_tags
+        def self.properties
           {
             :maximal_pressure => {:code =>  '622E', :type =>  Integer},
             :minimal_pressure => {:code =>  '622F', :type =>  Integer},
@@ -100,11 +103,11 @@ module Tanita
       end
 
       class Pedometer < BaseApiClient
-        def endpoint
+        def self.endpoint
           '/status/pedometer.json'
         end
 
-        def measurement_tags
+        def self.properties
           {
             :steps => {:code =>  '6331', :type =>  Integer},
             :exercise => {:code => '6335', :type => Integer},
@@ -114,11 +117,11 @@ module Tanita
       end
 
       class Smug < BaseApiClient
-        def endpoint
+        def self.endpoint
           '/status/smug.json'
         end
 
-        def measurement_tags
+        def self.properties
           {
             :urinary_sugar => {:code => '6240', :type => Integer}
           }
