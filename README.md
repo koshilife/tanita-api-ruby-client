@@ -92,7 +92,7 @@ result = api.status
 result = api.status(from: Date.current.ago(1.month), to: Date.current)
 
 # list the body-weight data
-result.items.each{|item| puts "#{Time.at(item[:measured_at]).strftime('%F %R')} => #{item[:weight]}" }
+result.items.each{|item| puts "#{Time.at(item.measured_at).strftime('%F %R')} => #{item.weight}" }
 2019-10-10 08:09 => 66.7
 2019-10-11 09:02 => 66.5
 2019-10-13 08:22 => 66.7
@@ -101,23 +101,27 @@ result.items.each{|item| puts "#{Time.at(item[:measured_at]).strftime('%F %R')} 
 
 # Result of Innerscan Api
 result = Tanita::Api::Client::Innerscan.new.status
-result.items[0].keys
-=> [:measured_at, :model, :weight, :body_fat, :muscle_mass, :physique_rating, :visceral_fat_rating, :basal_metabolic_rate, :metabolic_age, :bone_mass]
+=> #<Tanita::Api::Client::Result:70199592389780 properties=birth_date,height,sex,items>
+result.items[0]
+=> #<Tanita::Api::Client::InnerscanItem:70199597695880 properties=measured_at,registered_at,model,weight,body_fat,muscle_mass,physique_rating,visceral_fat_rating,basal_metabolic_rate,metabolic_age,bone_mass>
+result.items[0].weight
+=> 66.7
 
 # Result of Sphygmomanometer Api
 result = Tanita::Api::Client::Sphygmomanometer.new.status
-result.items[0].keys
-=> [:measured_at, :model, :maximal_pressure, :minimal_pressure, :pulse]
+result.items[0]
+=> #<Tanita::Api::Client::SphygmomanometerItem:70199592475760 properties=measured_at,registered_at,model,maximal_pressure,minimal_pressure,pulse>
 
 # Result of Pedometer Api
 result = Tanita::Api::Client::Pedometer.new.status
-result.items[0].keys
-=> [:measured_at, :model, :steps, :calories]
+result.items[0]
+=> #<Tanita::Api::Client::PedometerItem:70199605021160 properties=measured_at,registered_at,model,steps,exercise,calories>
+
 
 # Result of Smug Api
 result = Tanita::Api::Client::Smug.new.status
-result.items[0].keys
-=> [:measured_at, :model, :urinary_sugar]
+result.items[0]
+=> #<Tanita::Api::Client::SmugItem:70199600803680 properties=measured_at,registered_at,model,urinary_sugar>
 
 # common attributes of Result class
 result.birth_date # [Date]

@@ -1,3 +1,14 @@
+# 0.3.0
+
+changed Result hash to be Object.
+
+```
+# before
+result.items[0][:weight]
+# after
+result.items[0].weight
+```
+
 # 0.2.3
 
 remove Gemfile.lock
