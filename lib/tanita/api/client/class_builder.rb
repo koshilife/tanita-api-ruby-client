@@ -27,10 +27,10 @@ module Tanita
           klass = Tanita::Api::Client.const_set(class_name, super_klass)
           define_properties_reader(klass)
           property_names.each do |property_name|
-            klass.properties << property_name if klass.respond_to?(:properties)
+            klass.properties << property_name
             define_getter_and_setter(klass, property_name)
           end
-          klass.properties.freeze if klass.respond_to?(:properties)
+          klass.properties.freeze
         end
         private_class_method :create_class
 

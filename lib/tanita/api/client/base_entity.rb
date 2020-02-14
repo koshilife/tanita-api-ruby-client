@@ -5,7 +5,6 @@ module Tanita
     module Client
       class BaseEntity
         def initialize(property_values = {})
-          @properties = []
           @cached_property_values = {}
           @cached_property_values.merge!(property_values)
         end
