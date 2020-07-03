@@ -1,3 +1,7 @@
+# 0.4.1
+
+- refs #4 fix settings for simplecov.
+
 # 0.4.0
 
 - refs #4 measure code coverage
