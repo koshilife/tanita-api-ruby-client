@@ -1,6 +1,8 @@
 # Tanita::Api::Client
 
+[![Test](https://github.com/koshilife/tanita-api-ruby-client/workflows/Test/badge.svg)](https://github.com/koshilife/tanita-api-ruby-client/actions?query=workflow%3ATest)
 [![Gem Version](https://badge.fury.io/rb/tanita-api-client.svg)](http://badge.fury.io/rb/tanita-api-client)
+[![license](https://img.shields.io/github/license/koshilife/tanita-api-ruby-client)](https://github.com/koshilife/tanita-api-ruby-client/blob/master/LICENSE.txt)
 
 ## About
 
