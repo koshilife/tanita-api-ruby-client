@@ -1,3 +1,7 @@
+# 0.5.0
+
+- refs #12 fix dependencies.
+
 # 0.4.1
 
 - refs #4 fix settings for simplecov.
