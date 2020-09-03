@@ -12,7 +12,7 @@ module Tanita
         def to_h
           ret = {}
           self.class.properties.each do |property|
-            ret[property.to_sym] = eval property.to_s
+            ret[property.to_sym] = eval property.to_s # rubocop:disable Security/Eval
           end
           ret
         end

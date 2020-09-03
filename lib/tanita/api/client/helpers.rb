@@ -33,7 +33,7 @@ module Tanita
         end
 
         def parse_json(str)
-          JSON.parse(str, :symbolize_names => true)
+          JSON.parse(str, symbolize_names: true)
         rescue JSON::ParserError => e
           raise Error.new("JSON::ParseError: '#{e}'\nstr:#{str}")
         end

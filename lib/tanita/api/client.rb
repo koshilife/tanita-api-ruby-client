@@ -35,21 +35,21 @@ module Tanita
 
         def auth_uri
           params = {
-            :client_id => @client_id,
-            :redirect_uri => @redirect_uri,
-            :scope => @scopes.join(','),
-            :response_type => 'code'
+            client_id: @client_id,
+            redirect_uri: @redirect_uri,
+            scope: @scopes.join(','),
+            response_type: 'code'
           }
           generate_uri(AUTH_URL_PATH, params)
         end
 
         def exchange_token(auth_code:)
           params = {
-            :client_id => @client_id,
-            :client_secret => @client_secret,
-            :redirect_uri => DEFAULT_REDIRECT_URI,
-            :code => auth_code,
-            :grant_type => 'authorization_code'
+            client_id: @client_id,
+            client_secret: @client_secret,
+            redirect_uri: DEFAULT_REDIRECT_URI,
+            code: auth_code,
+            grant_type: 'authorization_code'
           }
           res = request(TOKEN_URL_PATH, params)
           token = parse_json(res.body)
@@ -76,14 +76,14 @@ module Tanita
 
         def self.properties
           {
-            :weight => {:code => '6021', :type => Float},
-            :body_fat => {:code => '6022', :type => Float},
-            :muscle_mass => {:code => '6023', :type => Float},
-            :physique_rating => {:code => '6024', :type => Integer},
-            :visceral_fat_rating => {:code => '6025', :type => Float},
-            :basal_metabolic_rate => {:code => '6027', :type => Integer},
-            :metabolic_age =>  {:code => '6028', :type => Integer},
-            :bone_mass =>  {:code => '6029', :type => Float}
+            weight: {code: '6021', type: Float},
+            body_fat: {code: '6022', type: Float},
+            muscle_mass: {code: '6023', type: Float},
+            physique_rating: {code: '6024', type: Integer},
+            visceral_fat_rating: {code: '6025', type: Float},
+            basal_metabolic_rate: {code: '6027', type: Integer},
+            metabolic_age: {code: '6028', type: Integer},
+            bone_mass: {code: '6029', type: Float}
           }
         end
       end
@@ -95,9 +95,9 @@ module Tanita
 
         def self.properties
           {
-            :maximal_pressure => {:code =>  '622E', :type =>  Integer},
-            :minimal_pressure => {:code =>  '622F', :type =>  Integer},
-            :pulse => {:code =>  '6230', :type =>  Integer}
+            maximal_pressure: {code: '622E', type: Integer},
+            minimal_pressure: {code: '622F', type: Integer},
+            pulse: {code: '6230', type: Integer}
           }
         end
       end
@@ -109,9 +109,9 @@ module Tanita
 
         def self.properties
           {
-            :steps => {:code =>  '6331', :type =>  Integer},
-            :exercise => {:code => '6335', :type => Integer},
-            :calories => {:code => '6336', :type => Integer}
+            steps: {code: '6331', type: Integer},
+            exercise: {code: '6335', type: Integer},
+            calories: {code: '6336', type: Integer}
           }
         end
       end
@@ -123,7 +123,7 @@ module Tanita
 
         def self.properties
           {
-            :urinary_sugar => {:code => '6240', :type => Integer}
+            urinary_sugar: {code: '6240', type: Integer}
           }
         end
       end

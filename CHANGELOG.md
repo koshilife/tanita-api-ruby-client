@@ -1,17 +1,23 @@
-# 0.5.0
+# CHANGELOG
+
+## 0.5.1
+
+- fix rubocop warnings.
+
+## 0.5.0
 
 - refs #12 fix dependencies.
 
-# 0.4.1
+## 0.4.1
 
 - refs #4 fix settings for simplecov.
 
-# 0.4.0
+## 0.4.0
 
 - refs #4 measure code coverage
 - refs #5 setup GitHub Actions for rspec and pushing to RubyGems
 
-# 0.3.0
+## 0.3.0
 
 changed Result hash to be Object.
 
@@ -22,11 +28,11 @@ result.items[0][:weight]
 result.items[0].weight
 ```
 
-# 0.2.3
+## 0.2.3
 
 remove Gemfile.lock
 
-# 0.2.2
+## 0.2.2
 
 - define constants
   - `Tanita::Api::Client::AUTH_URL`
@@ -34,12 +40,12 @@ remove Gemfile.lock
   - `Tanita::Api::Client::TOKEN_URL`
   - `Tanita::Api::Client::TOKEN_URL_PATH`
 
-# 0.2.1
+## 0.2.1
 
 - rename constant
   - from `Tanita::Api::Client::HttpHelper::BASE_URL` to `Tanita::Api::Client::BASE_URL`
 
-# 0.2.0
+## 0.2.0
 
 - set required ruby version to greater than or equal to v2.4
 - added `data_type` argument in BaseApiClient#initialize
@@ -49,11 +55,11 @@ remove Gemfile.lock
   - `@data` to `@items`
   - `@data[0][:date]` to `@items[0][:measured_at]` or `@items[0][:registered_at]`
 
-# 0.1.1
+## 0.1.1
 
 - support Tanita::Api::Client.configure
 - wrote spec
 
-# 0.1.0
+## 0.1.0
 
 - Initial release

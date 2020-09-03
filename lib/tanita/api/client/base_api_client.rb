@@ -26,7 +26,9 @@ module Tanita
           raise Error.new("param:'access_token' is required.'") if @access_token.nil?
 
           @date_type = date_type
-          raise Error.new("param:'date_type' is invalid.'") unless [DATE_TYPE_REGISTERD_AT, DATE_TYPE_MEASURED_AT].include? date_type
+          unless [DATE_TYPE_REGISTERD_AT, DATE_TYPE_MEASURED_AT].include? date_type
+            raise Error.new("param:'date_type' is invalid.'")
+          end
 
           ClassBuilder.load
         end
@@ -37,9 +39,9 @@ module Tanita
         )
           tags = self.class.properties.values.map { |i| i[:code] }.join(',')
           params = {
-            :access_token => @access_token,
-            :date => @date_type,
-            :tag => tags
+            access_token: @access_token,
+            date: @date_type,
+            tag: tags
           }
           params[:from] = time_format(from) unless from.nil?
           params[:to] = time_format(to) unless to.nil?
@@ -56,10 +58,10 @@ module Tanita
         def build_result(res)
           result = parse_json(res.body)
           Result.new(
-            :birth_date => Date.parse(result[:birth_date]),
-            :height => result[:height].to_f,
-            :sex => result[:sex],
-            :items => build_result_items(:raw_items => result[:data])
+            birth_date: Date.parse(result[:birth_date]),
+            height: result[:height].to_f,
+            sex: result[:sex],
+            items: build_result_items(raw_items: result[:data])
           )
         end
 
@@ -69,8 +71,8 @@ module Tanita
             date = item[:date]
             model = item[:model]
             key = "#{date}_#{model}"
-            property = find_property_by_code(:code => item[:tag])
-            value = cast(:value => item[:keydata], :type => property[:type])
+            property = find_property_by_code(code: item[:tag])
+            value = cast(value: item[:keydata], type: property[:type])
             item_dic[key] ||= {}
             item_dic[key][date_key] = Time.parse("#{date} +09:00").to_i unless item_dic[key].key? :date
             item_dic[key][:model] = model unless item_dic[key].key? :model
@@ -93,7 +95,7 @@ module Tanita
 
           @property_code_dic = {}
           self.class.properties.each do |m_name, m_info|
-            @property_code_dic[m_info[:code]] = {:name => m_name, :type => m_info[:type]}
+            @property_code_dic[m_info[:code]] = {name: m_name, type: m_info[:type]}
           end
           @property_code_dic[code]
         end

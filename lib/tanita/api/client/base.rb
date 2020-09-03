@@ -3,7 +3,6 @@
 module Tanita
   module Api
     module Client
-
       module Scope
         INNERSCAN = 'innerscan'
         SPHYGMOMANOMETER = 'sphygmomanometer'
@@ -16,7 +15,6 @@ module Tanita
 
       class Error < StandardError
       end
-
     end
   end
 end

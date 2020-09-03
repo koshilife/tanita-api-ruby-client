@@ -4,19 +4,15 @@ module Tanita
   module Api
     module Client
       class Configuration
-        # [String]
+        # @return [String]
         attr_accessor :client_id
-
-        # [String]
+        # @return [String]
         attr_accessor :client_secret
-
-        # [String]
+        # @return [String]
         attr_accessor :redirect_uri
-
-        # [String]
+        # @return [String]
         attr_accessor :access_token
-
-        # [Array<Tanita::Api::Client::Scope>]
+        # @return [Array<Tanita::Api::Client::Scope>]
         attr_accessor :scopes
       end
     end

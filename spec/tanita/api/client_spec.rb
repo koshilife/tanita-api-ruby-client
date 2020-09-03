@@ -41,16 +41,16 @@ RSpec.describe Tanita::Api::Client do
     it 'raise Error when exchange access token by invalid auth code' do
       auth_helper = Client::Auth.new
       body = read_fixture('exchange_token', 'invalid.json')
-      WebMock.stub_request(:post, Client::TOKEN_URL.to_s).to_return(:body => body)
-      expect { auth_helper.exchange_token(:auth_code => 'invalid_code') }.to raise_error(Client::Error)
+      WebMock.stub_request(:post, Client::TOKEN_URL.to_s).to_return(body: body)
+      expect { auth_helper.exchange_token(auth_code: 'invalid_code') }.to raise_error(Client::Error)
     end
 
     it 'exchange access token by valid auth code' do
       auth_helper = Client::Auth.new
       body = read_fixture('exchange_token', 'valid.json')
-      WebMock.stub_request(:post, Client::TOKEN_URL.to_s).to_return(:body => body)
-      expected_token = {:access_token => 'hoge_access_token', :expires_in => 12_345_678, :refresh_token => 'hoge_refresh_token'}
-      expect(auth_helper.exchange_token(:auth_code => 'valid_code')).to eq expected_token
+      WebMock.stub_request(:post, Client::TOKEN_URL.to_s).to_return(body: body)
+      expected_token = {access_token: 'hoge_access_token', expires_in: 12_345_678, refresh_token: 'hoge_refresh_token'}
+      expect(auth_helper.exchange_token(auth_code: 'valid_code')).to eq expected_token
     end
   end
 
@@ -60,7 +60,7 @@ RSpec.describe Tanita::Api::Client do
     end
 
     it 'raise Error when initialize Service class for invalid parameters' do
-      expect { Client::Innerscan.new(:date_type => 'unknown') }.to raise_error(Client::Error)
+      expect { Client::Innerscan.new(date_type: 'unknown') }.to raise_error(Client::Error)
     end
 
     it 'set configuration for access_token' do
@@ -78,7 +78,7 @@ RSpec.describe Tanita::Api::Client do
     it 'raise Error invalid token' do
       innerscan = Client::Innerscan.new
       body = read_fixture('services', 'invalid_token.html')
-      WebMock.stub_request(:post, "#{Client::BASE_URL}/status/innerscan.json").to_return(:body => body)
+      WebMock.stub_request(:post, "#{Client::BASE_URL}/status/innerscan.json").to_return(body: body)
       expect { innerscan.status }.to raise_error(Client::Error)
     end
 
@@ -115,7 +115,7 @@ RSpec.describe Tanita::Api::Client do
     it 'fetch Innerscan data' do
       api = Client::Innerscan.new
       body = read_fixture('services', 'innerscan_valid.json')
-      WebMock.stub_request(:post, "#{Client::BASE_URL}#{api.class.endpoint}").to_return(:body => body)
+      WebMock.stub_request(:post, "#{Client::BASE_URL}#{api.class.endpoint}").to_return(body: body)
       result = api.status
 
       expect(result.birth_date).to eq Date.parse('20200101')
@@ -123,30 +123,30 @@ RSpec.describe Tanita::Api::Client do
       expect(result.sex).to eq 'male'
       expected_items = [
         {
-          :registered_at => nil,
-          :measured_at => to_unixtime('201912050838'),
-          :model => '01000144',
-          :weight => 77.10,
-          :body_fat => 21.30,
-          :muscle_mass => 57.50,
-          :physique_rating => 2,
-          :visceral_fat_rating => 10.5,
-          :basal_metabolic_rate => 1721,
-          :metabolic_age => 32,
-          :bone_mass => 3.10
+          registered_at: nil,
+          measured_at: to_unixtime('201912050838'),
+          model: '01000144',
+          weight: 77.10,
+          body_fat: 21.30,
+          muscle_mass: 57.50,
+          physique_rating: 2,
+          visceral_fat_rating: 10.5,
+          basal_metabolic_rate: 1721,
+          metabolic_age: 32,
+          bone_mass: 3.10
         },
         {
-          :registered_at => nil,
-          :measured_at => to_unixtime('201912070806'),
-          :model => '01000144',
-          :weight => 76.70,
-          :body_fat => 22.80,
-          :muscle_mass => 56.20,
-          :physique_rating => 2,
-          :visceral_fat_rating => 11.0,
-          :basal_metabolic_rate => 1680,
-          :metabolic_age => 34,
-          :bone_mass => 3.10
+          registered_at: nil,
+          measured_at: to_unixtime('201912070806'),
+          model: '01000144',
+          weight: 76.70,
+          body_fat: 22.80,
+          muscle_mass: 56.20,
+          physique_rating: 2,
+          visceral_fat_rating: 11.0,
+          basal_metabolic_rate: 1680,
+          metabolic_age: 34,
+          bone_mass: 3.10
         }
       ]
       expect(result.items.map(&:to_h)).to eq expected_items
@@ -154,9 +154,9 @@ RSpec.describe Tanita::Api::Client do
     end
 
     it 'fetch Sphygmomanometer data' do
-      api = Client::Sphygmomanometer.new(:date_type => Client::DATE_TYPE_REGISTERD_AT)
+      api = Client::Sphygmomanometer.new(date_type: Client::DATE_TYPE_REGISTERD_AT)
       body = read_fixture('services', 'sphygmomanometer_valid.json')
-      WebMock.stub_request(:post, "#{Client::BASE_URL}#{api.class.endpoint}").to_return(:body => body)
+      WebMock.stub_request(:post, "#{Client::BASE_URL}#{api.class.endpoint}").to_return(body: body)
       result = api.status
 
       expect(result.birth_date).to eq Date.parse('20200101')
@@ -164,20 +164,20 @@ RSpec.describe Tanita::Api::Client do
       expect(result.sex).to eq 'female'
       expected_items = [
         {
-          :registered_at => to_unixtime('202001070115'),
-          :measured_at => nil,
-          :model => '00000000',
-          :maximal_pressure => 180,
-          :minimal_pressure => 70,
-          :pulse => 20
+          registered_at: to_unixtime('202001070115'),
+          measured_at: nil,
+          model: '00000000',
+          maximal_pressure: 180,
+          minimal_pressure: 70,
+          pulse: 20
         },
         {
-          :registered_at => to_unixtime('202001070130'),
-          :measured_at => nil,
-          :model => '00000000',
-          :maximal_pressure => 130,
-          :minimal_pressure => 80,
-          :pulse => 50
+          registered_at: to_unixtime('202001070130'),
+          measured_at: nil,
+          model: '00000000',
+          maximal_pressure: 130,
+          minimal_pressure: 80,
+          pulse: 50
         }
       ]
       expect(result.items.map(&:to_h)).to eq expected_items
@@ -187,7 +187,7 @@ RSpec.describe Tanita::Api::Client do
     it 'fetch Pedometer items' do
       api = Client::Pedometer.new
       body = read_fixture('services', 'pedometer_valid.json')
-      WebMock.stub_request(:post, "#{Client::BASE_URL}#{api.class.endpoint}").to_return(:body => body)
+      WebMock.stub_request(:post, "#{Client::BASE_URL}#{api.class.endpoint}").to_return(body: body)
       result = api.status
 
       expect(result.birth_date).to eq Date.parse('20200101')
@@ -195,20 +195,20 @@ RSpec.describe Tanita::Api::Client do
       expect(result.sex).to eq 'male'
       expected_items = [
         {
-          :registered_at => nil,
-          :measured_at => to_unixtime('202001070000'),
-          :model => '00000000',
-          :steps => 1000,
-          :exercise => nil,
-          :calories => 5500
+          registered_at: nil,
+          measured_at: to_unixtime('202001070000'),
+          model: '00000000',
+          steps: 1000,
+          exercise: nil,
+          calories: 5500
         },
         {
-          :registered_at => nil,
-          :measured_at => to_unixtime('202001080000'),
-          :model => '00000000',
-          :steps => 2222,
-          :exercise => nil,
-          :calories => 6660
+          registered_at: nil,
+          measured_at: to_unixtime('202001080000'),
+          model: '00000000',
+          steps: 2222,
+          exercise: nil,
+          calories: 6660
         }
       ]
       expect(result.items.map(&:to_h)).to eq expected_items
@@ -218,7 +218,7 @@ RSpec.describe Tanita::Api::Client do
     it 'fetch Smug data' do
       api = Client::Smug.new
       body = read_fixture('services', 'smug_valid.json')
-      WebMock.stub_request(:post, "#{Client::BASE_URL}#{api.class.endpoint}").to_return(:body => body)
+      WebMock.stub_request(:post, "#{Client::BASE_URL}#{api.class.endpoint}").to_return(body: body)
       result = api.status
 
       expect(result.birth_date).to eq Date.parse('20200101')
@@ -226,16 +226,16 @@ RSpec.describe Tanita::Api::Client do
       expect(result.sex).to eq 'male'
       expected_items = [
         {
-          :registered_at => nil,
-          :measured_at => to_unixtime('202001070120'),
-          :model => '00000000',
-          :urinary_sugar => 500
+          registered_at: nil,
+          measured_at: to_unixtime('202001070120'),
+          model: '00000000',
+          urinary_sugar: 500
         },
         {
-          :registered_at => nil,
-          :measured_at => to_unixtime('202001070125'),
-          :model => '00000000',
-          :urinary_sugar => 550
+          registered_at: nil,
+          measured_at: to_unixtime('202001070125'),
+          model: '00000000',
+          urinary_sugar: 550
         }
       ]
       expect(result.items.map(&:to_h)).to eq expected_items
